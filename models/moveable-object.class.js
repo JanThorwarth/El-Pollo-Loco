@@ -6,6 +6,7 @@ class MoveableObject {
   width = 150;
   currentImage = 0;
   speed = 0.15;
+  otherDirection = false;
   ImageCache = {};
   ChickenCache = {};
 
