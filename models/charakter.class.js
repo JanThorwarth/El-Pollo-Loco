@@ -87,4 +87,9 @@ class Charakter extends MoveableObject {
       }
     }, 80);
   }
+
+  throw() {
+    if (this.world.keyboard.D) {
+    }
+  }
 }
