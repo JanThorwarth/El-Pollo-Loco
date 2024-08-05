@@ -1,4 +1,5 @@
 class StatusBarCoin extends DrawableObject {
+  coinCount = 0;
   IMAGES = [
     'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png',
     'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png',
@@ -8,7 +9,7 @@ class StatusBarCoin extends DrawableObject {
     'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png',
   ];
 
-  percentage = 100;
+  percentage = 0;
 
   constructor() {
     super();
@@ -17,7 +18,7 @@ class StatusBarCoin extends DrawableObject {
     this.y = 45;
     this.width = 200;
     this.height = 60;
-    this.setPercentage(100);
+    this.setPercentage(this.percentage);
   }
 
   setPercentage(percentage) {
@@ -29,16 +30,23 @@ class StatusBarCoin extends DrawableObject {
   resolveImageIndex() {
     if (this.percentage == 100) {
       return 5;
-    } else if (this.percentage > 80) {
+    } else if (this.percentage == 80) {
       return 4;
-    } else if (this.percentage > 60) {
+    } else if (this.percentage == 60) {
       return 3;
-    } else if (this.percentage > 40) {
+    } else if (this.percentage == 40) {
       return 2;
-    } else if (this.percentage > 20) {
+    } else if (this.percentage == 20) {
       return 1;
     } else {
       return 0;
+    }
+  }
+
+  addCoin() {
+    if (this.percentage < 100) {
+      this.percentage += 20; // Erhöhe die Prozentzahl um 20 für jeden Coin
+      this.setPercentage(this.percentage); // Aktualisiere das Bild basierend auf der neuen Prozentzahl
     }
   }
 }
