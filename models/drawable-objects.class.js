@@ -13,12 +13,31 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (
-      this instanceof Charakter ||
-      this instanceof Chicken ||
-      this instanceof Bottles ||
-      this instanceof Coins
-    ) {
+    if (this instanceof Charakter) {
+      // Rahmen für Charakter anpassen
+      let frameOffsetX = 10; // Horizontaler Versatz
+      let frameOffsetY = 80; // Vertikaler Versatz nach oben
+      let frameWidth = this.width - 20; // Rahmenbreite reduzieren
+      let frameHeight = this.height - 80; // Rahmenhöhe reduzieren
+
+      ctx.beginPath();
+      ctx.lineWidth = '5';
+      ctx.strokeStyle = 'blue';
+      ctx.rect(this.x + frameOffsetX, this.y + frameOffsetY, frameWidth, frameHeight);
+      ctx.stroke();
+    } else if (this instanceof Coins) {
+      // Rahmen für Coins anpassen
+      let frameOffsetX = 30; // Horizontaler Versatz
+      let frameOffsetY = 30; // Vertikaler Versatz
+      let frameWidth = this.width - 60; // Rahmenbreite reduzieren
+      let frameHeight = this.height - 60; // Rahmenhöhe reduzieren
+
+      ctx.beginPath();
+      ctx.lineWidth = '5';
+      ctx.strokeStyle = 'blue';
+      ctx.rect(this.x + frameOffsetX, this.y + frameOffsetY, frameWidth, frameHeight);
+      ctx.stroke();
+    } else if (this instanceof Chicken || this instanceof Bottles) {
       ctx.beginPath();
       ctx.lineWidth = '5';
       ctx.strokeStyle = 'blue';

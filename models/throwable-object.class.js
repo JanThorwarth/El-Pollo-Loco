@@ -6,13 +6,13 @@ class ThrowableObject extends MoveableObject {
     'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
   ];
 
-  constructor(x, y, otherDirection) {
+  constructor(x, y, CharacterDirection) {
     super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
     this.x = x;
     this.y = y;
     this.height = 70;
     this.width = 70;
-    this.otherDirection = otherDirection;
+    this.CharacterDirection = CharacterDirection;
     this.throw();
   }
 
@@ -21,7 +21,7 @@ class ThrowableObject extends MoveableObject {
     this.speedY = 30;
     this.applyGravity();
     setInterval(() => {
-      if (this.otherDirection) {
+      if (this.CharacterDirection) {
         this.x -= 10;
       } else {
         this.x += 10;

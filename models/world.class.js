@@ -13,6 +13,7 @@ class World {
   throwableObjects = [];
   coinCount = 0;
   bottleCount = 0;
+  otherDirection = false;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -68,7 +69,11 @@ class World {
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCount > 0) {
       // Nur werfen, wenn Flaschen vorhanden sind
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+      let bottle = new ThrowableObject(
+        this.character.x + 100,
+        this.character.y + 100,
+        this.character.otherDirection
+      );
       this.throwableObjects.push(bottle); // Flasche zur Wurfobjekt-Liste hinzufügen
       this.bottleCount--; // Flaschenanzahl verringern
       this.statusBarBottle.setPercentage(this.bottleCount * 20); // Statusleiste aktualisieren
@@ -111,12 +116,13 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.coins);
     this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
     //this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.level.clouds);
+
     this.addStatusBar();
 
     let self = this;
