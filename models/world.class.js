@@ -75,27 +75,37 @@ class World {
     }
   }
 
-  checkCollisions() {
+  enemyCollision() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         // this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
+  }
 
+  coinCollision() {
     this.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
         this.coins.splice(index, 1); // Münze entfernen
         this.addCoin(); // Münzenzahl erhöhen und Statusleiste aktualisieren
       }
     });
+  }
 
+  bottleCollision() {
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
         this.bottles.splice(index, 1); // Flasche entfernen
         this.addBottle(); // Flaschenzahl erhöhen und Statusleiste aktualisieren
       }
     });
+  }
+
+  checkCollisions() {
+    this.enemyCollision();
+    this.coinCollision();
+    this.bottleCollision();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -104,29 +114,24 @@ class World {
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.coins);
     this.addObjectsToMap(this.bottles);
-
     this.addToMap(this.character);
     //this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.clouds);
-
-    this.ctx.translate(-this.camera_x, 0);
-    this.addToMap(this.statusBarHealth);
-    this.ctx.translate(this.camera_x, 0);
-
-    this.ctx.translate(-this.camera_x, 0);
-    this.addToMap(this.statusBarCoin);
-    this.ctx.translate(this.camera_x, 0);
-
-    this.ctx.translate(-this.camera_x, 0);
-    this.addToMap(this.statusBarBottle);
-    this.ctx.translate(this.camera_x, 0);
-
-    this.ctx.translate(-this.camera_x, 0);
+    this.addStatusBar();
 
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
+  }
+
+  addStatusBar() {
+    this.ctx.translate(-this.camera_x, 0);
+    this.addToMap(this.statusBarHealth);
+    this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusBarBottle);
+    this.ctx.translate(this.camera_x, 0);
+    this.ctx.translate(-this.camera_x, 0);
   }
 
   addObjectsToMap(objects) {
