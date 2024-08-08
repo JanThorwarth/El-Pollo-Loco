@@ -83,7 +83,7 @@ class World {
   enemyCollision() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        //this.character.hit();
+        this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
@@ -121,7 +121,7 @@ class World {
     this.addObjectsToMap(this.coins);
     this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
-    //this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.enemies);
 
     this.addStatusBar();
 
