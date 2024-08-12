@@ -30,6 +30,10 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  isFalling() {
+    return this.speedY < 0 && this.y < 158;
+  }
+
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&

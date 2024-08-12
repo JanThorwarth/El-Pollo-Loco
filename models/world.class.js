@@ -63,7 +63,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 200);
+    }, 100);
   }
 
   checkThrowObjects() {
@@ -78,6 +78,14 @@ class World {
       this.bottleCount--; // Flaschenanzahl verringern
       this.statusBarBottle.setPercentage(this.bottleCount * 20); // Statusleiste aktualisieren
     }
+  }
+
+  enemyCollisionAbove() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy) && this.character.isFalling()) {
+        enemy.die();
+      }
+    });
   }
 
   enemyCollision() {
@@ -111,6 +119,7 @@ class World {
     this.enemyCollision();
     this.coinCollision();
     this.bottleCollision();
+    this.enemyCollisionAbove();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
