@@ -79,4 +79,7 @@ class MoveableObject extends DrawableObject {
     this.x += this.speed;
     this.walking_sound.play();
   }
+  bounce() {
+    jump();
+  }
 }
