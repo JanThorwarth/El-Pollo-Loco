@@ -37,4 +37,9 @@ class SmallChicken extends MoveableObject {
       }
     }, 200);
   }
+
+  die() {
+    this.isDead = true;
+    this.loadImage(this.IMAGES_DEAD[0]);
+  }
 }

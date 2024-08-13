@@ -80,22 +80,45 @@ class World {
     }
   }
 
-  enemyCollisionAbove() {
-    this.level.enemies.forEach((enemy, index) => {
+  smallChickenCollisionAbove() {
+    this.level.smallChicken.forEach((enemy, index) => {
       if (this.character.isColliding(enemy) && this.character.isFalling()) {
         if (!enemy.isDead) {
           enemy.die();
           this.character.jump();
         }
         setTimeout(() => {
-          this.level.enemies.splice(index, 1);
+          this.level.smallChicken.splice(index, 1);
         }, 2000);
       }
     });
   }
 
-  enemyCollision() {
-    this.level.enemies.forEach((enemy) => {
+  smallChickenCollision() {
+    this.level.smallChicken.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBarHealth.setPercentage(this.character.energy);
+      }
+    });
+  }
+
+  ChickenCollisionAbove() {
+    this.level.chicken.forEach((enemy, index) => {
+      if (this.character.isColliding(enemy) && this.character.isFalling()) {
+        if (!enemy.isDead) {
+          enemy.die();
+          this.character.jump();
+        }
+        setTimeout(() => {
+          this.level.chicken.splice(index, 1);
+        }, 2000);
+      }
+    });
+  }
+
+  chickenCollision() {
+    this.level.chicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
@@ -122,10 +145,12 @@ class World {
   }
 
   checkCollisions() {
-    this.enemyCollision();
+    this.chickenCollision();
+    this.smallChickenCollision();
+    this.smallChickenCollisionAbove();
     this.coinCollision();
     this.bottleCollision();
-    this.enemyCollisionAbove();
+    this.ChickenCollisionAbove();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -136,7 +161,9 @@ class World {
     this.addObjectsToMap(this.coins);
     this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
-    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.chicken);
+    this.addObjectsToMap(this.level.smallChicken);
+    this.addObjectsToMap(this.level.Endboss);
 
     this.addStatusBar();
 
