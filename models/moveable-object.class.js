@@ -44,7 +44,9 @@ class MoveableObject extends DrawableObject {
   }
 
   hit() {
-    this.energy -= 5;
+    if (!this.isFalling()) {
+      this.energy -= 10;
+    }
     if (this.energy < 0) {
       this.energy = 0;
     } else {
@@ -53,9 +55,12 @@ class MoveableObject extends DrawableObject {
   }
 
   isHurt() {
-    let timePassed = new Date().getTime() - this.lastHit;
-    timePassed = timePassed / 1000;
-    return timePassed < 1;
+    if (!this.isFalling()) {
+      let timePassed = new Date().getTime() - this.lastHit;
+      timePassed = timePassed / 1000;
+      return timePassed < 1;
+    }
+    return false;
   }
 
   isDead() {
@@ -78,8 +83,5 @@ class MoveableObject extends DrawableObject {
   moveRight() {
     this.x += this.speed;
     this.walking_sound.play();
-  }
-  bounce() {
-    jump();
   }
 }

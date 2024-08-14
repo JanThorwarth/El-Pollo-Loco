@@ -63,7 +63,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 50);
+    }, 25);
   }
 
   checkThrowObjects() {
@@ -96,14 +96,14 @@ class World {
 
   smallChickenCollision() {
     this.level.smallChicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy) && !this.character.isFalling()) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
   }
 
-  ChickenCollisionAbove() {
+  chickenCollisionAbove() {
     this.level.chicken.forEach((enemy, index) => {
       if (this.character.isColliding(enemy) && this.character.isFalling()) {
         if (!enemy.isDead) {
@@ -119,7 +119,7 @@ class World {
 
   chickenCollision() {
     this.level.chicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy) && !this.character.isFalling()) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
@@ -146,11 +146,11 @@ class World {
 
   checkCollisions() {
     this.chickenCollision();
-    this.smallChickenCollision();
-    this.smallChickenCollisionAbove();
+    // this.smallChickenCollision();
+    // this.smallChickenCollisionAbove();
     this.coinCollision();
     this.bottleCollision();
-    this.ChickenCollisionAbove();
+    this.chickenCollisionAbove();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -162,7 +162,7 @@ class World {
     this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.chicken);
-    this.addObjectsToMap(this.level.smallChicken);
+    //this.addObjectsToMap(this.level.smallChicken);
     this.addObjectsToMap(this.level.Endboss);
 
     this.addStatusBar();
