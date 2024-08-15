@@ -64,7 +64,7 @@ class World {
   runCollisions() {
     setInterval(() => {
       this.checkCollisions();
-    }, 10);
+    }, 50);
   }
 
   runThrowObjects() {
@@ -154,9 +154,8 @@ class World {
   bottleCollisionWithEndboss() {
     this.throwableObjects.forEach((thrownBottle, index) => {
       if (this.endboss.isColliding(thrownBottle)) {
-        this.splashAnimation();
-        // Flasche entfernen
-        this.addBottle(); // Flaschenzahl erhöhen und Statusleiste aktualisieren
+        thrownBottle.splashAnimation();
+        this.throwableObjects.speedY = 0;
         setTimeout(() => {
           this.throwableObjects.splice(index, 1);
         }, 2000);

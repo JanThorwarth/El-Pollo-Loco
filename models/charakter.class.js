@@ -1,5 +1,5 @@
 class Charakter extends MoveableObject {
-  speed = 5;
+  speed = 30;
   y = 50;
 
   IMAGES_WALKING = [
@@ -69,10 +69,7 @@ class Charakter extends MoveableObject {
     left: 20,
     right: 20,
   };
-
   world;
-  walking_sound = new Audio('audio/walking.mp3');
-
   constructor() {
     super().loadImage('img/2_character_pepe/2_walk/W-21.png');
     this.loadImages(this.IMAGES_WALKING);
@@ -101,6 +98,7 @@ class Charakter extends MoveableObject {
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        this.jump_sound.play();
       }
 
       this.world.camera_x = -this.x + 100;

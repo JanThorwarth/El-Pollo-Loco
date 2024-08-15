@@ -23,7 +23,6 @@ class ThrowableObject extends MoveableObject {
     this.height = 70;
     this.width = 70;
     this.CharacterDirection = CharacterDirection;
-    this.bottleHasSplashed = false;
     this.throw();
     this.splashAnimation();
   }
