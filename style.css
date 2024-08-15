@@ -20,6 +20,46 @@ h1 {
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
+.startScreen {
+  width: 720px;
+  height: 480px;
+  position: relative;
+}
+.startScreen-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.controls {
+  position: absolute;
+  top: 77%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 21px;
+  font-size: 27px;
+  width: 720px;
+}
+.start-button {
+  cursor: pointer;
+  position: absolute;
+  top: 10%; /* Passt dies nach Bedarf an */
+  left: 10%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: orange;
+  padding: 12px 20px;
+  font-family: 'zabras';
+  font-size: 32px;
+  border-radius: 12px;
+}
+.volume {
+  cursor: pointer;
+  position: absolute;
+  top: 3%;
+  right: 3%;
+}
+
 @media only screen and (max-width: 720px) {
   canvas {
     width: 100%;

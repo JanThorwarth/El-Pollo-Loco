@@ -14,6 +14,7 @@ class World {
   coinCount = 0;
   bottleCount = 0;
   otherDirection = false;
+  endboss = new Endboss();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -23,7 +24,8 @@ class World {
     this.createBottles();
     this.draw();
     this.setWorld();
-    this.run();
+    this.runCollisions();
+    this.runThrowObjects();
   }
 
   createBottles() {
@@ -59,11 +61,16 @@ class World {
   setWorld() {
     this.character.world = this;
   }
-  run() {
+  runCollisions() {
     setInterval(() => {
       this.checkCollisions();
+    }, 10);
+  }
+
+  runThrowObjects() {
+    setInterval(() => {
       this.checkThrowObjects();
-    }, 25);
+    }, 200);
   }
 
   checkThrowObjects() {
@@ -96,7 +103,7 @@ class World {
 
   smallChickenCollision() {
     this.level.smallChicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !this.character.isFalling()) {
+      if (this.character.isColliding(enemy) && !this.character.isFalling() && !enemy.isDead) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
@@ -119,7 +126,7 @@ class World {
 
   chickenCollision() {
     this.level.chicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !this.character.isFalling()) {
+      if (this.character.isColliding(enemy) && !this.character.isFalling() && !enemy.isDead) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
@@ -144,13 +151,27 @@ class World {
     });
   }
 
+  bottleCollisionWithEndboss() {
+    this.throwableObjects.forEach((thrownBottle, index) => {
+      if (this.endboss.isColliding(thrownBottle)) {
+        this.splashAnimation();
+        // Flasche entfernen
+        this.addBottle(); // Flaschenzahl erhöhen und Statusleiste aktualisieren
+        setTimeout(() => {
+          this.throwableObjects.splice(index, 1);
+        }, 2000);
+      }
+    });
+  }
+
   checkCollisions() {
     this.chickenCollision();
-    // this.smallChickenCollision();
-    // this.smallChickenCollisionAbove();
+    this.smallChickenCollision();
+    this.smallChickenCollisionAbove();
     this.coinCollision();
     this.bottleCollision();
     this.chickenCollisionAbove();
+    this.bottleCollisionWithEndboss();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -162,8 +183,8 @@ class World {
     this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.chicken);
-    //this.addObjectsToMap(this.level.smallChicken);
-    this.addObjectsToMap(this.level.Endboss);
+    this.addObjectsToMap(this.level.smallChicken);
+    this.addObjectsToMap(this.level.endboss);
 
     this.addStatusBar();
 

@@ -25,6 +25,7 @@ class ThrowableObject extends MoveableObject {
     this.CharacterDirection = CharacterDirection;
     this.bottleHasSplashed = false;
     this.throw();
+    this.splashAnimation();
   }
 
   throw() {
@@ -39,5 +40,10 @@ class ThrowableObject extends MoveableObject {
         this.x += 20;
       }
     }, 1000 / 20);
+  }
+  splashAnimation() {
+    setInterval(() => {
+      this.playAnimation(this.bottleSplashImg);
+    }, 3000);
   }
 }

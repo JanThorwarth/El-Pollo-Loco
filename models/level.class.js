@@ -4,10 +4,10 @@ class Level {
   backgroundObjects;
   level_end_x = 2200;
 
-  constructor(chicken, smallChicken, Endboss, clouds, backgroundObjects) {
+  constructor(chicken, smallChicken, endboss, clouds, backgroundObjects) {
     this.chicken = chicken;
     this.smallChicken = smallChicken;
-    this.Endboss = Endboss;
+    this.endboss = endboss;
     this.clouds = clouds;
     this.backgroundObjects = backgroundObjects;
   }
