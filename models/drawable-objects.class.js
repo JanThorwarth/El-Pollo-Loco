@@ -7,16 +7,16 @@ class DrawableObject {
   height = 270;
   width = 150;
 
-  walking_sound = new Audio('audio/walking.mp3');
-  hurt_sound = new Audio('audio/hurt.mp3');
-  jump_sound = new Audio('audio/jump.mp3');
-  snoring_sound = new Audio('audio/snoring.mp3');
-  bottle_sound = new Audio('audio/bottle.mp3');
-  coin_sound = new Audio('audio/coin.mp3');
-  chicken_sound = new Audio('audio/chicken.mp3');
-  music_sound = new Audio('audio/music.mp3');
-  pepe_death_sound = new Audio('audio/pepe-death.mp3');
-  chicken_death_sound = new Audio('audio/chicken-death.mp3');
+  //walking_sound = new Audio('audio/walking.mp3');
+  //hurt_sound = new Audio('audio/hurt.mp3');
+  //jump_sound = new Audio('audio/jump.mp3');
+  //snoring_sound = new Audio('audio/snoring.mp3');
+  //bottle_sound = new Audio('audio/bottle.mp3');
+  //coin_sound = new Audio('audio/coin.mp3');
+  //chicken_sound = new Audio('audio/chicken.mp3');
+  //music_sound = new Audio('audio/music.mp3');
+  //pepe_death_sound = new Audio('audio/pepe-death.mp3');
+  //chicken_death_sound = new Audio('audio/chicken-death.mp3');
 
   loadImage(path) {
     this.img = new Image();

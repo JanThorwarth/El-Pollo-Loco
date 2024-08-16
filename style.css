@@ -31,9 +31,10 @@ h1 {
   display: block;
 }
 .controls {
+  color: white;
   position: absolute;
   top: 77%;
-  left: 60%;
+  left: 69%;
   transform: translate(-50%, -50%);
   display: flex;
   gap: 21px;
@@ -44,7 +45,7 @@ h1 {
   cursor: pointer;
   position: absolute;
   top: 10%; /* Passt dies nach Bedarf an */
-  left: 10%;
+  left: 9%;
   transform: translate(-50%, -50%);
   border: none;
   background: orange;
@@ -58,6 +59,34 @@ h1 {
   position: absolute;
   top: 3%;
   right: 3%;
+}
+.endScreen {
+  width: 720px;
+  height: 480px;
+  position: relative;
+}
+.end-background {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+}
+.end-gameover {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+}
+.endScreen button {
+  cursor: pointer;
+  position: absolute;
+  top: 10%; /* Passt dies nach Bedarf an */
+  left: 10%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: orange;
+  padding: 12px 20px;
+  font-family: 'zabras';
+  font-size: 32px;
+  border-radius: 12px;
 }
 
 @media only screen and (max-width: 720px) {

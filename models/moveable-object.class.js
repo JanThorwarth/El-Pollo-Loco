@@ -45,7 +45,7 @@ class MoveableObject extends DrawableObject {
 
   hit() {
     if (!this.isFalling()) {
-      this.energy -= 10;
+      this.energy -= 1;
     }
     if (this.energy < 0) {
       this.energy = 0;
@@ -82,6 +82,5 @@ class MoveableObject extends DrawableObject {
   }
   moveRight() {
     this.x += this.speed;
-    this.walking_sound.play();
   }
 }

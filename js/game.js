@@ -1,10 +1,29 @@
 let canvas;
-let world;
+let world = null;
 let keyboard = new Keyboard();
 
-function init() {
+function startGame() {
+  initLevel();
   canvas = document.getElementById('canvas');
+  startscreen = document.getElementById('start');
   world = new World(canvas, keyboard);
+
+  startscreen.style.display = 'none';
+  canvas.style.display = 'block';
+}
+
+function restart() {
+  window.location.reload();
+  startGame();
+}
+
+function volumeOnOff() {
+  let volume = document.getElementById('volume');
+  if (volume.src.endsWith('img/icons/volume-on.png')) {
+    volume.src = 'img/icons/volume-off.png';
+  } else {
+    volume.src = 'img/icons/volume-on.png';
+  }
 }
 
 window.addEventListener('keydown', (e) => {

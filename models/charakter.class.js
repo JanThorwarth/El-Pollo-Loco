@@ -84,21 +84,17 @@ class Charakter extends MoveableObject {
 
   animate() {
     setInterval(() => {
-      this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false;
-        this.walking_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
-        this.walking_sound.play();
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        this.jump_sound.play();
       }
 
       this.world.camera_x = -this.x + 100;
@@ -107,6 +103,8 @@ class Charakter extends MoveableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('endscreen').style.display = 'block';
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
