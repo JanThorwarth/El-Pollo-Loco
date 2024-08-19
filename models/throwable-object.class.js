@@ -24,13 +24,12 @@ class ThrowableObject extends MoveableObject {
     this.width = 70;
     this.CharacterDirection = CharacterDirection;
     this.throw();
-    this.splashAnimation();
   }
 
   throw() {
     this.speedY = 30;
     this.applyGravity();
-    setInterval(() => {
+    this.bottleThrow = setInterval(() => {
       if (this.CharacterDirection) {
         this.playAnimation(this.throwBottles);
         this.x -= 20;
@@ -41,8 +40,17 @@ class ThrowableObject extends MoveableObject {
     }, 1000 / 20);
   }
   splashAnimation() {
-    setInterval(() => {
-      this.playAnimation(this.bottleSplashImg);
-    }, 3000);
+    clearInterval(this.bottleThrow); // Stoppt die Wurfbewegung
+    this.playAnimation(this.bottleSplashImg); // Startet die Splash-Animation
+    this.splashAnimationCompleted = false; // Status zum Verfolgen, ob die Animation abgeschlossen ist
+
+    // Führe die Animation aus
+    const interval = setInterval(() => {
+      if (this.currentImage >= this.bottleSplashImg.length) {
+        clearInterval(interval); // Stoppt die Animation
+        this.currentImage = this.bottleSplashImg.length - 1; // Setzt auf das letzte Bild
+        this.splashAnimationCompleted = true; // Markiert die Animation als abgeschlossen
+      }
+    }, 1000 / 10); // Bildwechselrate (hier 20 FPS)
   }
 }

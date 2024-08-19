@@ -1,12 +1,12 @@
 class Coins extends DrawableObject {
   width = 150;
   height = 150;
-  coins = ['img/8_coin/coin_1.png', 'img/8_coin/coin_2.png'];
+  coinsImg = ['img/8_coin/coin_1.png', 'img/8_coin/coin_2.png'];
 
   constructor() {
     super();
-    this.loadImages(this.coins);
-    this.loadImage(this.coins[0]); // Das erste Bild wird als Standard gesetzt
+    this.loadImages(this.coinsImg);
+    this.loadImage(this.coinsImg[0]); // Das erste Bild wird als Standard gesetzt
 
     this.x = 200 + Math.random() * 500;
     this.y = 50 + Math.random() * 300;
@@ -22,7 +22,7 @@ class Coins extends DrawableObject {
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.coins);
+      this.playAnimation(this.coinsImg);
     }, 200);
   }
 

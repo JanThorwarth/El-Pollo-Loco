@@ -6,6 +6,7 @@ class DrawableObject {
   y = 160;
   height = 270;
   width = 150;
+  visible = true;
 
   //walking_sound = new Audio('audio/walking.mp3');
   //hurt_sound = new Audio('audio/hurt.mp3');
@@ -52,7 +53,9 @@ class DrawableObject {
   }
 
   draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    if (this.visible) {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
   }
 
   loadImages(arr) {

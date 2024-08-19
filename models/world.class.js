@@ -8,6 +8,7 @@ class World {
   statusBarHealth = new StatusBarHealth();
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
+  statusBarEndboss = new StatusBarEndboss();
   coins = [];
   bottles = [];
   throwableObjects = [];
@@ -26,6 +27,16 @@ class World {
     this.setWorld();
     this.runCollisions();
     this.runThrowObjects();
+    this.update();
+  }
+
+  update() {
+    setInterval(() => {
+      if (this.character.x >= 2050) {
+        this.statusBarEndboss.show();
+      }
+    }, 100);
+    this.draw();
   }
 
   createBottles() {
@@ -133,6 +144,15 @@ class World {
     });
   }
 
+  EndbossCollision() {
+    this.level.endboss.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBarHealth.setPercentage(this.character.energy);
+      }
+    });
+  }
+
   coinCollision() {
     this.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
@@ -154,11 +174,15 @@ class World {
   bottleCollisionWithEndboss() {
     this.throwableObjects.forEach((thrownBottle, index) => {
       if (this.endboss.isColliding(thrownBottle)) {
-        thrownBottle.splashAnimation();
-        this.throwableObjects.speedY = 0;
-        setTimeout(() => {
-          this.throwableObjects.splice(index, 1);
-        }, 2000);
+        thrownBottle.splashAnimation(); // Startet die Splash-Animation
+
+        // Verzögere das Entfernen der Flasche bis die Animation abgeschlossen ist
+        const checkIfCompleted = setInterval(() => {
+          if (thrownBottle.splashAnimationCompleted) {
+            this.throwableObjects.splice(index, 1); // Entfernt die Flasche
+            clearInterval(checkIfCompleted); // Stoppt das Intervall
+          }
+        }, 1000); // Überprüft alle 100 ms
       }
     });
   }
@@ -171,6 +195,7 @@ class World {
     this.bottleCollision();
     this.chickenCollisionAbove();
     this.bottleCollisionWithEndboss();
+    this.EndbossCollision();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -179,12 +204,11 @@ class World {
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.coins);
-    this.addObjectsToMap(this.bottles);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.chicken);
     this.addObjectsToMap(this.level.smallChicken);
     this.addObjectsToMap(this.level.endboss);
-
+    this.addObjectsToMap(this.bottles);
     this.addStatusBar();
 
     let self = this;
@@ -198,6 +222,7 @@ class World {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBarEndboss);
     this.ctx.translate(this.camera_x, 0);
     this.ctx.translate(-this.camera_x, 0);
   }
