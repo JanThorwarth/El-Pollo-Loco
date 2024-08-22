@@ -5,6 +5,7 @@ class ThrowableObject extends MoveableObject {
     'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
     'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
   ];
+
   bottleSplashImg = [
     'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
     'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
@@ -22,6 +23,7 @@ class ThrowableObject extends MoveableObject {
     this.y = y;
     this.height = 70;
     this.width = 70;
+    this.visible = true;
     this.CharacterDirection = CharacterDirection;
     this.throw();
   }
@@ -37,20 +39,43 @@ class ThrowableObject extends MoveableObject {
         this.playAnimation(this.throwBottles);
         this.x += 20;
       }
+      this.thrownBottleCollisionWithGround();
     }, 1000 / 20);
   }
   splashAnimation() {
-    clearInterval(this.bottleThrow); // Stoppt die Wurfbewegung
-    this.playAnimation(this.bottleSplashImg); // Startet die Splash-Animation
-    this.splashAnimationCompleted = false; // Status zum Verfolgen, ob die Animation abgeschlossen ist
+    clearInterval(this.bottleThrow);
+    this.splashAnimationCompleted = false;
 
-    // Führe die Animation aus
     const interval = setInterval(() => {
       if (this.currentImage >= this.bottleSplashImg.length) {
-        clearInterval(interval); // Stoppt die Animation
-        this.currentImage = this.bottleSplashImg.length - 1; // Setzt auf das letzte Bild
-        this.splashAnimationCompleted = true; // Markiert die Animation als abgeschlossen
+        clearInterval(interval);
+        this.currentImage = this.bottleSplashImg.length - 1;
+        this.img = this.ImageCache[this.bottleSplashImg[this.currentImage]];
+        this.splashAnimationCompleted = true;
+        this.playEndAnimationOnce();
       }
-    }, 1000 / 10); // Bildwechselrate (hier 20 FPS)
+    }, 1000 / 25);
+  }
+
+  playEndAnimationOnce() {
+    this.loadImages(this.bottleSplashImg);
+    let i = 0;
+    let splashInterval = setInterval(() => {
+      this.playAnimation([this.bottleSplashImg[i]]);
+      i++;
+      if (i >= this.bottleSplashImg.length) {
+        clearInterval(splashInterval);
+        this.y = +1000;
+      }
+    }, 1000 / 60);
+  }
+
+  thrownBottleCollisionWithGround() {
+    if (this.y >= 380) {
+      this.y = 380;
+      this.speedY = 0;
+      clearInterval(this.bottleThrow);
+      this.splashAnimation();
+    }
   }
 }

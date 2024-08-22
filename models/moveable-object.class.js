@@ -19,7 +19,7 @@ class MoveableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-    }, 1000 / 25);
+    }, 1000 / 30);
   }
 
   isAboveGround() {
@@ -45,9 +45,9 @@ class MoveableObject extends DrawableObject {
 
   hit() {
     if (!this.isFalling()) {
-      this.energy -= 1;
+      this.energy -= 10;
     }
-    if (this.energy < 0) {
+    if (this.energy <= 0) {
       this.energy = 0;
     } else {
       this.lastHit = new Date().getTime();

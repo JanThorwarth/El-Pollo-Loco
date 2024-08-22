@@ -88,6 +88,34 @@ h1 {
   font-size: 32px;
   border-radius: 12px;
 }
+.endScreenWin {
+  width: 720px;
+  height: 480px;
+  position: relative;
+}
+.end-backgroundWin {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+}
+.end-gameoverWin {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+}
+.endScreenWin button {
+  cursor: pointer;
+  position: absolute;
+  top: 10%; /* Passt dies nach Bedarf an */
+  left: 10%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: orange;
+  padding: 12px 20px;
+  font-family: 'zabras';
+  font-size: 32px;
+  border-radius: 12px;
+}
 
 @media only screen and (max-width: 720px) {
   canvas {

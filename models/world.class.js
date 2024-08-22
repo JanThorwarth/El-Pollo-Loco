@@ -145,12 +145,11 @@ class World {
   }
 
   EndbossCollision() {
-    this.level.endboss.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBarHealth.setPercentage(this.character.energy);
-      }
-    });
+    if (this.character.isColliding(this.endboss)) {
+      // Überprüft die Kollision mit dem Endboss
+      this.character.hit();
+      this.statusBarHealth.setPercentage(this.character.energy);
+    }
   }
 
   coinCollision() {
@@ -175,6 +174,8 @@ class World {
     this.throwableObjects.forEach((thrownBottle, index) => {
       if (this.endboss.isColliding(thrownBottle)) {
         thrownBottle.splashAnimation(); // Startet die Splash-Animation
+        this.endboss.hit();
+        this.statusBarEndboss.setPercentage(this.endboss.energy);
 
         // Verzögere das Entfernen der Flasche bis die Animation abgeschlossen ist
         const checkIfCompleted = setInterval(() => {
@@ -182,7 +183,7 @@ class World {
             this.throwableObjects.splice(index, 1); // Entfernt die Flasche
             clearInterval(checkIfCompleted); // Stoppt das Intervall
           }
-        }, 1000); // Überprüft alle 100 ms
+        }, 100); // Überprüft alle 100 ms
       }
     });
   }
@@ -196,6 +197,7 @@ class World {
     this.chickenCollisionAbove();
     this.bottleCollisionWithEndboss();
     this.EndbossCollision();
+    this.thrownBottleCollisionWithGround();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -207,7 +209,7 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.chicken);
     this.addObjectsToMap(this.level.smallChicken);
-    this.addObjectsToMap(this.level.endboss);
+    this.addToMap(this.endboss);
     this.addObjectsToMap(this.bottles);
     this.addStatusBar();
 

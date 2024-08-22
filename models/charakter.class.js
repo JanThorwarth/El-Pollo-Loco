@@ -1,5 +1,5 @@
 class Charakter extends MoveableObject {
-  speed = 30;
+  speed = 10;
   y = 50;
 
   IMAGES_WALKING = [
@@ -80,16 +80,19 @@ class Charakter extends MoveableObject {
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.applyGravity();
     this.animate();
+    this.animateIdle();
   }
 
   animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
+        this.lastKeyPressTime = Date.now();
         this.otherDirection = false;
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
+        this.lastKeyPressTime = Date.now();
         this.otherDirection = true;
       }
 
@@ -98,7 +101,7 @@ class Charakter extends MoveableObject {
       }
 
       this.world.camera_x = -this.x + 100;
-    }, 1000 / 60);
+    }, 1000 / 30);
 
     setInterval(() => {
       if (this.isDead()) {
@@ -115,5 +118,16 @@ class Charakter extends MoveableObject {
         }
       }
     }, 100);
+  }
+
+  animateIdle() {
+    setInterval(() => {
+      let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;
+      if (timeSinceLastKeyPress > 10000) {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+      } else if (timeSinceLastKeyPress > 1) {
+        this.playAnimation(this.IMAGES_IDLE);
+      }
+    }, 200);
   }
 }
