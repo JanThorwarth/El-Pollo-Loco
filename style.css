@@ -12,6 +12,7 @@ body {
 canvas {
   background-color: black;
   display: block;
+  border-radius: 16px;
 }
 
 h1 {
@@ -29,6 +30,7 @@ h1 {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 12px;
 }
 .controls {
   color: white;
@@ -41,10 +43,16 @@ h1 {
   font-size: 27px;
   width: 720px;
 }
+.impressum {
+  cursor: pointer;
+  position: absolute;
+  top: 3%;
+  right: 11%;
+}
 .start-button {
   cursor: pointer;
   position: absolute;
-  top: 10%; /* Passt dies nach Bedarf an */
+  top: 10%;
   left: 9%;
   transform: translate(-50%, -50%);
   border: none;
@@ -64,22 +72,43 @@ h1 {
   width: 720px;
   height: 480px;
   position: relative;
+  border-radius: 12px;
 }
 .end-background {
   width: 720px;
   height: 480px;
   position: absolute;
+  border-radius: 12px;
 }
 .end-gameover {
   width: 720px;
   height: 480px;
   position: absolute;
+  border-radius: 12px;
 }
-.endScreen button {
+.endScreenWin {
+  width: 720px;
+  height: 480px;
+  position: relative;
+  border-radius: 12px;
+}
+.end-backgroundWin {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+  border-radius: 12px;
+}
+.end-gameoverWin {
+  width: 720px;
+  height: 480px;
+  position: absolute;
+  border-radius: 12px;
+}
+.restart-gameover {
   cursor: pointer;
   position: absolute;
   top: 10%; /* Passt dies nach Bedarf an */
-  left: 10%;
+  left: 90%;
   transform: translate(-50%, -50%);
   border: none;
   background: orange;
@@ -88,26 +117,40 @@ h1 {
   font-size: 32px;
   border-radius: 12px;
 }
-.endScreenWin {
-  width: 720px;
-  height: 480px;
-  position: relative;
-}
-.end-backgroundWin {
-  width: 720px;
-  height: 480px;
-  position: absolute;
-}
-.end-gameoverWin {
-  width: 720px;
-  height: 480px;
-  position: absolute;
-}
-.endScreenWin button {
+
+.restart-win {
   cursor: pointer;
   position: absolute;
   top: 10%; /* Passt dies nach Bedarf an */
-  left: 10%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: orange;
+  padding: 12px 20px;
+  font-family: 'zabras';
+  font-size: 32px;
+  border-radius: 12px;
+}
+
+.homescreen-gameover {
+  cursor: pointer;
+  position: absolute;
+  top: 10%; /* Passt dies nach Bedarf an */
+  left: 14%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: orange;
+  padding: 12px 20px;
+  font-family: 'zabras';
+  font-size: 32px;
+  border-radius: 12px;
+}
+
+.homescreen-win {
+  cursor: pointer;
+  position: absolute;
+  top: 10%; /* Passt dies nach Bedarf an */
+  left: 14%;
   transform: translate(-50%, -50%);
   border: none;
   background: orange;

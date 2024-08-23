@@ -40,7 +40,7 @@ class World {
   }
 
   createBottles() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       // Erzeuge mehrere Flaschen
       let bottle = new Bottles();
       bottle.x = 200 + Math.random() * 2000; // Zufällige Position im Bereich
@@ -60,7 +60,7 @@ class World {
   }
 
   createCoins() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       // Erzeuge 5 Münzen
       let coin = new Coins();
       coin.x = 200 + Math.random() * 2000; // Zufällige Position im Bereich
@@ -81,7 +81,7 @@ class World {
   runThrowObjects() {
     setInterval(() => {
       this.checkThrowObjects();
-    }, 200);
+    }, 300);
   }
 
   checkThrowObjects() {
@@ -94,7 +94,7 @@ class World {
       );
       this.throwableObjects.push(bottle); // Flasche zur Wurfobjekt-Liste hinzufügen
       this.bottleCount--; // Flaschenanzahl verringern
-      this.statusBarBottle.setPercentage(this.bottleCount * 20); // Statusleiste aktualisieren
+      this.statusBarBottle.setPercentage(this.bottleCount * 10); // Statusleiste aktualisieren
     }
   }
 
@@ -148,6 +148,7 @@ class World {
     if (this.character.isColliding(this.endboss)) {
       // Überprüft die Kollision mit dem Endboss
       this.character.hit();
+      this.endboss.attack();
       this.statusBarHealth.setPercentage(this.character.energy);
     }
   }
@@ -173,17 +174,9 @@ class World {
   bottleCollisionWithEndboss() {
     this.throwableObjects.forEach((thrownBottle, index) => {
       if (this.endboss.isColliding(thrownBottle)) {
-        thrownBottle.splashAnimation(); // Startet die Splash-Animation
+        thrownBottle.splashAnimation();
         this.endboss.hit();
         this.statusBarEndboss.setPercentage(this.endboss.energy);
-
-        // Verzögere das Entfernen der Flasche bis die Animation abgeschlossen ist
-        const checkIfCompleted = setInterval(() => {
-          if (thrownBottle.splashAnimationCompleted) {
-            this.throwableObjects.splice(index, 1); // Entfernt die Flasche
-            clearInterval(checkIfCompleted); // Stoppt das Intervall
-          }
-        }, 100); // Überprüft alle 100 ms
       }
     });
   }
@@ -197,7 +190,6 @@ class World {
     this.chickenCollisionAbove();
     this.bottleCollisionWithEndboss();
     this.EndbossCollision();
-    this.thrownBottleCollisionWithGround();
   }
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

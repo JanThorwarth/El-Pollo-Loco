@@ -30,7 +30,7 @@ class ThrowableObject extends MoveableObject {
 
   throw() {
     this.speedY = 30;
-    this.applyGravity();
+    this.throwGravity();
     this.bottleThrow = setInterval(() => {
       if (this.CharacterDirection) {
         this.playAnimation(this.throwBottles);
@@ -52,30 +52,40 @@ class ThrowableObject extends MoveableObject {
         this.currentImage = this.bottleSplashImg.length - 1;
         this.img = this.ImageCache[this.bottleSplashImg[this.currentImage]];
         this.splashAnimationCompleted = true;
-        this.playEndAnimationOnce();
+        this.playEndAnimationOnce(this.bottleSplashImg);
       }
     }, 1000 / 25);
   }
 
-  playEndAnimationOnce() {
-    this.loadImages(this.bottleSplashImg);
+  playEndAnimationOnce(array) {
+    this.loadImages(array);
     let i = 0;
     let splashInterval = setInterval(() => {
-      this.playAnimation([this.bottleSplashImg[i]]);
+      this.playAnimation([array[i]]);
       i++;
-      if (i >= this.bottleSplashImg.length) {
+      if (i >= array.length) {
         clearInterval(splashInterval);
         this.y = +1000;
       }
-    }, 1000 / 60);
+    }, 1000 / 25);
   }
 
-  thrownBottleCollisionWithGround() {
+  thrownBottleCollisionWithGround(gravity) {
     if (this.y >= 380) {
       this.y = 380;
       this.speedY = 0;
       clearInterval(this.bottleThrow);
+      clearInterval(gravity);
       this.splashAnimation();
     }
+  }
+  throwGravity() {
+    let gravity = setInterval(() => {
+      if (this.isAboveGround() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+        this.thrownBottleCollisionWithGround(gravity);
+      }
+    }, 1000 / 30);
   }
 }

@@ -12,9 +12,37 @@ function startGame() {
   canvas.style.display = 'block';
 }
 
+function homescreen() {
+  clearAllIntervals();
+
+  endscreen = document.getElementById('endscreen');
+  endscreenWin = document.getElementById('endscreenWin');
+  startscreen = document.getElementById('start');
+
+  startscreen.style.display = 'block';
+  endscreen.style.display = 'none';
+  endscreenWin.style.display = 'none';
+
+  world = new World(canvas, keyboard);
+}
+
 function restart() {
-  window.location.reload();
-  startGame();
+  clearAllIntervals();
+  canvas = document.getElementById('canvas');
+  endscreen = document.getElementById('endscreenWin');
+  startscreen = document.getElementById('start');
+  endscreen = document.getElementById('endscreen');
+
+  endscreen.style.display = 'none';
+  startscreen.style.display = 'none';
+  endscreenWin.style.display = 'none';
+  canvas.style.display = 'block';
+  initLevel();
+  world = new World(canvas, keyboard);
+}
+
+function clearAllIntervals() {
+  for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
 function volumeOnOff() {

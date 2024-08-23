@@ -2,8 +2,8 @@ class Endboss extends MoveableObject {
   y = 50;
   height = 400;
   width = 250;
-  speed = 4;
-  energy = 100;
+  speed = 8;
+  energy = 200;
   IMAGES_WALKING = [
     'img/4_enemie_boss_chicken/1_walk/G1.png',
     'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -52,6 +52,9 @@ class Endboss extends MoveableObject {
     right: 10,
   };
   hadFirstContact = false;
+  isAttacking = false;
+  currentAnimation = null;
+  endAnimation = false;
 
   constructor() {
     super().loadImage('img/4_enemie_boss_chicken/1_walk/G1.png');
@@ -73,10 +76,12 @@ class Endboss extends MoveableObject {
         this.hadFirstContact = true;
       }
 
-      if (this.hadFirstContact && !this.isDead()) {
+      if (this.hadFirstContact && !this.isDead() && !this.isAttacking) {
         if (i < 10) {
+          this.setCurrentAnimation('ALERT');
           this.playAnimation(this.IMAGES_ALERT);
         } else {
+          this.setCurrentAnimation('WALKING');
           this.playAnimation(this.IMAGES_WALKING);
           this.moveLeft();
         }
@@ -85,13 +90,35 @@ class Endboss extends MoveableObject {
     }, 100);
 
     setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead() && !this.endAnimation) {
+        this.setCurrentAnimation('DEAD');
         this.playAnimation(this.IMAGES_DEAD);
-        document.getElementById('canvas').style.display = 'none';
-        document.getElementById('endscreenWin').style.display = 'block';
-      } else if (this.isHurt()) {
+        setTimeout(() => {
+          this.endAnimation = true;
+          document.getElementById('canvas').style.display = 'none';
+          document.getElementById('endscreenWin').style.display = 'block';
+        }, this.IMAGES_DEAD.length * 500);
+      } else if (this.isHurt() && !this.isAttacking) {
+        this.setCurrentAnimation('HURT');
         this.playAnimation(this.IMAGES_HURT);
       }
-    }, 200);
+    }, 100);
+  }
+
+  attack() {
+    if (!this.isAttacking && this.currentAnimation !== 'DEAD' && this.currentAnimation !== 'HURT') {
+      this.isAttacking = true;
+      this.setCurrentAnimation('ATTACK');
+      this.playAnimation(this.IMAGES_ATTACK); // Animation starten
+
+      setTimeout(() => {
+        this.isAttacking = false; // Angriff beendet
+        this.setCurrentAnimation(null); // Animation zurücksetzen
+      }, 100); // Angriffsdauer festlegen
+    }
+  }
+
+  setCurrentAnimation(animation) {
+    this.currentAnimation = animation;
   }
 }

@@ -1,6 +1,7 @@
 class Charakter extends MoveableObject {
   speed = 10;
   y = 50;
+  energy = 100;
 
   IMAGES_WALKING = [
     'img/2_character_pepe/2_walk/W-21.png',
@@ -125,7 +126,7 @@ class Charakter extends MoveableObject {
       let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;
       if (timeSinceLastKeyPress > 10000) {
         this.playAnimation(this.IMAGES_LONG_IDLE);
-      } else if (timeSinceLastKeyPress > 1) {
+      } else if (timeSinceLastKeyPress > 30) {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 200);

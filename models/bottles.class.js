@@ -16,10 +16,10 @@ class Bottles extends DrawableObject {
 
   constructor() {
     super();
-    this.loadImage(this.bottles[0]); // Setze das erste Bild als Standard
+    this.loadImage(this.bottles[0]);
     this.loadImages(this.bottles);
 
-    this.x = 200 + Math.random() * 500; // Zufällige Position
+    this.x = 200 + Math.random() * 500;
     this.y = 30;
     this.animate();
   }
@@ -31,7 +31,7 @@ class Bottles extends DrawableObject {
   }
 
   playAnimation(images) {
-    let i = this.currentImage % images.length; // Zyklisch durch die Bilder gehen
+    let i = this.currentImage % images.length;
     this.img = this.ImageCache[images[i]];
     this.currentImage++;
   }

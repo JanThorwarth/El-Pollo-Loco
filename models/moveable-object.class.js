@@ -14,7 +14,7 @@ class MoveableObject extends DrawableObject {
   };
 
   applyGravity() {
-    setInterval(() => {
+    const gravity = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
@@ -45,7 +45,7 @@ class MoveableObject extends DrawableObject {
 
   hit() {
     if (!this.isFalling()) {
-      this.energy -= 10;
+      this.energy -= 5;
     }
     if (this.energy <= 0) {
       this.energy = 0;
