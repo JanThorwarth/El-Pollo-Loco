@@ -46,8 +46,10 @@
             <div>D = Throw</div>
         </div>
         <button onclick="startGame()" class="start-button">Start</button>
-        <img onclick="volumeOnOff()" id="volume" class="volume" src="/img/icons/volume-on.png" alt="">
-        <img onclick="" id="impressum" class="impressum" src="/img/icons/impressum.png" alt="">
+        <img onclick="impressum()" id="impressum" class="impressum" src="/img/icons/impressum.png" alt="">
+        <div id="soundDivOverlay" class="soundDivOverlay">
+            <img id="volume" onclick="volumeOnOff()" src="/img/icons/volume-on.png" alt="">
+        </div>
     </div>
     <div id="endscreen" style="display: none;" class="endScreen">
         <img class="end-background" src="img/5_background/first_half_background.png" alt="">
@@ -62,7 +64,41 @@
         <button class="restart-win" onclick="restart()">Restart</button>
         <button class="homescreen-win" onclick="homescreen()">Home Screen</button>
     </div>
-    <canvas style="display: none;" id="canvas" width="720" height="480"> </canvas>
+
+    <div id="impressumDiv" class="impressumDiv d-none">
+        <div class="close">
+            <img onclick="closeImpressum()" src="/img/icons/close.png" alt="">
+        </div>
+        <h2>Impressum</h2>
+        <p>Jan Thorwarth <br>
+            Korker Waldstraße 17 <br>
+            77694 Kehl-Kork
+        </p>
+        <h2>Kontakt</h2>
+        <p>E-Mail: thorwarth.jan@web.de</p>
+    </div>
+
+    <div class="gameDiv">
+        <canvas style="display: none;" id="canvas" width="720" height="480"> </canvas>
+        <div id="soundDivIngame" class="soundDivIngame">
+            <img id="volumeIngame" onclick="volumeOnOffIngame()" src="/img/icons/volume-on.png" alt="">
+        </div>
+        <div class="mobile-controls">
+            <div class="left-right">
+                <img class="left" src="/img/icons/left.png" alt="">
+                <img class="right" src="/img/icons/right.png" alt="">
+            </div>
+            <div class="up-throw">
+                <img class="up" src="/img/icons/up.png" alt="">
+                <img class="throw" src="/img/icons/throw.png" alt="">
+
+            </div>
+
+        </div>
+    </div>
+
+
+
 
 
 </body>

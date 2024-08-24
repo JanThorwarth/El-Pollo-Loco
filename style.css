@@ -8,6 +8,11 @@ body {
   background-image: url('img/desert.png');
   background-position: center;
 }
+.gameDiv {
+  position: relative;
+  width: 720px;
+  height: 480px;
+}
 
 canvas {
   background-color: black;
@@ -34,20 +39,119 @@ h1 {
 }
 .controls {
   color: white;
-  position: absolute;
-  top: 77%;
-  left: 69%;
+  position: relative;
+  top: -6%;
+  left: 49%;
   transform: translate(-50%, -50%);
   display: flex;
-  gap: 21px;
+  gap: 54px;
   font-size: 27px;
-  width: 720px;
+  width: 500px;
+}
+.impressumDiv {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 260px;
+  height: 350px;
+  position: absolute;
+  background-color: orange;
+  top: 20%;
+  border-radius: 12px;
+}
+.impressumDiv h2 {
+  display: flex;
+  justify-content: center;
+}
+.soundDivOverlay {
+  position: absolute;
+  top: 6%;
+  left: 17%;
+  z-index: 100;
+}
+.soundDivIngame {
+  position: absolute;
+  top: 13%;
+  left: 5%;
+  z-index: 100;
+}
+.mobile-controls {
+  display: flex;
+  position: relative;
+  top: -12%;
+  justify-content: space-between;
+}
+.left-right {
+  display: flex;
+  gap: 24px;
+  margin-left: 30px;
+}
+.left {
+  background-color: orangered;
+  border-radius: 30px;
+  padding: 8px;
+}
+.right {
+  background-color: orangered;
+  border-radius: 30px;
+  padding: 8px;
+}
+.up-throw {
+  display: flex;
+  gap: 24px;
+  margin-right: 30px;
+}
+.throw {
+  background-color: orangered;
+  border-radius: 30px;
+  padding: 8px;
+}
+.up {
+  background-color: orangered;
+  border-radius: 30px;
+  padding: 8px;
+}
+
+.soundDivOverlay img {
+  width: 24px;
+  height: 24px;
+  background: orange;
+  border-radius: 20px;
+  padding: 8px;
+  cursor: pointer;
+}
+.soundDivIngame img {
+  width: 24px;
+  height: 24px;
+  background: orange;
+  border-radius: 20px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.d-none {
+  display: none;
+}
+.close {
+  display: flex;
+  justify-content: end;
+  padding: 12px;
+}
+.close img {
+  cursor: pointer;
+}
+
+.impressumDiv p {
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 .impressum {
+  background-color: orange;
+  padding: 10px;
+  border-radius: 12%;
   cursor: pointer;
   position: absolute;
   top: 3%;
-  right: 11%;
+  right: 3%;
 }
 .start-button {
   cursor: pointer;
@@ -161,16 +265,29 @@ h1 {
 }
 
 @media only screen and (max-width: 720px) {
+  .gameDiv {
+    width: 100%;
+  }
   canvas {
+    width: 100%;
+  }
+  .startScreen {
     width: 100%;
   }
 }
 
 @media only screen and (max-height: 480px) {
+  .gameDiv {
+    height: 100vh;
+  }
   canvas {
     height: 100vh;
   }
+
   h1 {
     display: none;
+  }
+  .startScreen {
+    height: 100vh;
   }
 }

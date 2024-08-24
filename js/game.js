@@ -6,8 +6,9 @@ function startGame() {
   initLevel();
   canvas = document.getElementById('canvas');
   startscreen = document.getElementById('start');
+  soundDivOverlay = document.getElementById('soundDivOverlay');
   world = new World(canvas, keyboard);
-
+  soundDivOverlay.classList.remove('d-none');
   startscreen.style.display = 'none';
   canvas.style.display = 'block';
 }
@@ -52,6 +53,24 @@ function volumeOnOff() {
   } else {
     volume.src = 'img/icons/volume-on.png';
   }
+}
+
+function volumeOnOffIngame() {
+  let volume = document.getElementById('volumeIngame');
+  if (volume.src.endsWith('img/icons/volume-on.png')) {
+    volume.src = 'img/icons/volume-off.png';
+  } else {
+    volume.src = 'img/icons/volume-on.png';
+  }
+}
+function closeImpressum() {
+  let impressumDiv = document.getElementById('impressumDiv');
+  impressumDiv.classList.add('d-none');
+}
+
+function impressum() {
+  let impressumDiv = document.getElementById('impressumDiv');
+  impressumDiv.classList.remove('d-none');
 }
 
 window.addEventListener('keydown', (e) => {

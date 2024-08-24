@@ -41,9 +41,8 @@ class World {
 
   createBottles() {
     for (let i = 0; i < 10; i++) {
-      // Erzeuge mehrere Flaschen
       let bottle = new Bottles();
-      bottle.x = 200 + Math.random() * 2000; // Zufällige Position im Bereich
+      bottle.x = 200 + Math.random() * 2000;
       bottle.y = 350;
       this.bottles.push(bottle);
     }
@@ -51,19 +50,18 @@ class World {
 
   addBottle() {
     this.bottleCount++;
-    this.statusBarBottle.addBottle(); // Aktualisiere die Statusleiste für Flaschen
+    this.statusBarBottle.addBottle();
   }
 
   addCoin() {
     this.coinCount++;
-    this.statusBarCoin.addCoin(); // Aktualisiere die Statusleiste
+    this.statusBarCoin.addCoin();
   }
 
   createCoins() {
     for (let i = 0; i < 10; i++) {
-      // Erzeuge 5 Münzen
       let coin = new Coins();
-      coin.x = 200 + Math.random() * 2000; // Zufällige Position im Bereich
+      coin.x = 200 + Math.random() * 2000;
       coin.y = 0 + Math.random() * 300;
       this.coins.push(coin);
     }
@@ -86,15 +84,14 @@ class World {
 
   checkThrowObjects() {
     if (this.keyboard.D && this.bottleCount > 0) {
-      // Nur werfen, wenn Flaschen vorhanden sind
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100,
         this.character.otherDirection
       );
-      this.throwableObjects.push(bottle); // Flasche zur Wurfobjekt-Liste hinzufügen
-      this.bottleCount--; // Flaschenanzahl verringern
-      this.statusBarBottle.setPercentage(this.bottleCount * 10); // Statusleiste aktualisieren
+      this.throwableObjects.push(bottle);
+      this.bottleCount--;
+      this.statusBarBottle.setPercentage(this.bottleCount * 10);
     }
   }
 
@@ -107,7 +104,7 @@ class World {
         }
         setTimeout(() => {
           this.level.smallChicken.splice(index, 1);
-        }, 2000);
+        }, 1000);
       }
     });
   }
@@ -130,7 +127,7 @@ class World {
         }
         setTimeout(() => {
           this.level.chicken.splice(index, 1);
-        }, 2000);
+        }, 1000);
       }
     });
   }
@@ -146,7 +143,6 @@ class World {
 
   EndbossCollision() {
     if (this.character.isColliding(this.endboss)) {
-      // Überprüft die Kollision mit dem Endboss
       this.character.hit();
       this.endboss.attack();
       this.statusBarHealth.setPercentage(this.character.energy);
@@ -156,8 +152,8 @@ class World {
   coinCollision() {
     this.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
-        this.coins.splice(index, 1); // Münze entfernen
-        this.addCoin(); // Münzenzahl erhöhen und Statusleiste aktualisieren
+        this.coins.splice(index, 1);
+        this.addCoin();
       }
     });
   }
@@ -165,8 +161,8 @@ class World {
   bottleCollision() {
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
-        this.bottles.splice(index, 1); // Flasche entfernen
-        this.addBottle(); // Flaschenzahl erhöhen und Statusleiste aktualisieren
+        this.bottles.splice(index, 1);
+        this.addBottle();
       }
     });
   }
