@@ -33,6 +33,8 @@ class Chicken extends MoveableObject {
   die() {
     this.isDead = true;
     this.loadImage(this.IMAGES_DEAD[0]);
+    this.chicken_death_sound.volume = 0.5;
+    this.chicken_death_sound.play();
   }
   isDead() {
     return this.isDead;

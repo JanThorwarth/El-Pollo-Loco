@@ -16,6 +16,8 @@ class World {
   bottleCount = 0;
   otherDirection = false;
   endboss = new Endboss();
+  coin_sound = new Audio('audio/coin.mp3');
+  bottle_sound = new Audio('audio/bottle.mp3');
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -153,6 +155,8 @@ class World {
     this.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
         this.coins.splice(index, 1);
+        this.coin_sound.volume = 0.4;
+        this.coin_sound.play();
         this.addCoin();
       }
     });
@@ -162,6 +166,8 @@ class World {
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
         this.bottles.splice(index, 1);
+        this.bottle_sound.volume = 0.4;
+        this.bottle_sound.play();
         this.addBottle();
       }
     });

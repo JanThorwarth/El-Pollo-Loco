@@ -10,7 +10,7 @@ body {
 }
 .gameDiv {
   position: relative;
-  width: 720px;
+
   height: 480px;
 }
 
@@ -18,6 +18,26 @@ canvas {
   background-color: black;
   display: block;
   border-radius: 16px;
+}
+
+.turn-screen-div {
+  font-family: 'Courier New', Courier, monospace;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.turn-screen-layer {
+  text-align: center;
+  color: white;
+  font-size: 2em;
 }
 
 h1 {
@@ -65,7 +85,6 @@ h1 {
   position: absolute;
   top: 6%;
   left: 17%;
-  z-index: 100;
 }
 .soundDivIngame {
   position: absolute;
@@ -76,9 +95,10 @@ h1 {
 .mobile-controls {
   display: flex;
   position: relative;
-  top: -12%;
+  top: -13%;
   justify-content: space-between;
 }
+
 .left-right {
   display: flex;
   gap: 24px;
@@ -211,7 +231,7 @@ h1 {
 .restart-gameover {
   cursor: pointer;
   position: absolute;
-  top: 10%; /* Passt dies nach Bedarf an */
+  top: 10%;
   left: 90%;
   transform: translate(-50%, -50%);
   border: none;
@@ -225,7 +245,7 @@ h1 {
 .restart-win {
   cursor: pointer;
   position: absolute;
-  top: 10%; /* Passt dies nach Bedarf an */
+  top: 10%;
   left: 90%;
   transform: translate(-50%, -50%);
   border: none;
@@ -239,7 +259,7 @@ h1 {
 .homescreen-gameover {
   cursor: pointer;
   position: absolute;
-  top: 10%; /* Passt dies nach Bedarf an */
+  top: 10%;
   left: 14%;
   transform: translate(-50%, -50%);
   border: none;
@@ -253,7 +273,7 @@ h1 {
 .homescreen-win {
   cursor: pointer;
   position: absolute;
-  top: 10%; /* Passt dies nach Bedarf an */
+  top: 10%;
   left: 14%;
   transform: translate(-50%, -50%);
   border: none;
@@ -274,6 +294,24 @@ h1 {
   .startScreen {
     width: 100%;
   }
+  .endScreenWin {
+    width: 100%;
+  }
+  .end-backgroundWin {
+    width: 100%;
+  }
+  .end-gameoverWin {
+    width: 100%;
+  }
+  .endScreen {
+    width: 100%;
+  }
+  .end-background {
+    width: 100%;
+  }
+  .end-gameover {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-height: 480px) {
@@ -288,6 +326,24 @@ h1 {
     display: none;
   }
   .startScreen {
+    height: 100vh;
+  }
+  .endScreenWin {
+    height: 100vh;
+  }
+  .end-backgroundWin {
+    height: 100vh;
+  }
+  .end-gameoverWin {
+    height: 100vh;
+  }
+  .end-background {
+    height: 100vh;
+  }
+  .end-gameover {
+    height: 100vh;
+  }
+  .endScreen {
     height: 100vh;
   }
 }

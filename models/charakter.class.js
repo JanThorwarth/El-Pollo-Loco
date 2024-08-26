@@ -86,19 +86,24 @@ class Charakter extends MoveableObject {
 
   animate() {
     setInterval(() => {
+      this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.lastKeyPressTime = Date.now();
         this.otherDirection = false;
+        this.walking_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.lastKeyPressTime = Date.now();
         this.otherDirection = true;
+        this.walking_sound.play();
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        this.jump_sound.volume = 0.1;
+        this.jump_sound.play();
       }
 
       this.world.camera_x = -this.x + 100;
@@ -106,11 +111,18 @@ class Charakter extends MoveableObject {
 
     setInterval(() => {
       if (this.isDead()) {
+        document.getElementById('soundDivIngame').classList.add('d-none');
+        document.getElementById('gameDiv').classList.add('d-none');
         this.playAnimation(this.IMAGES_DEAD);
+        this.pepe_death_sound.play();
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('endscreen').style.display = 'block';
+        this.lost_sound.play();
+        this.pepe_death_sound.pause();
+        this.lost_sound.pause();
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+        this.hurt_sound.play();
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {
@@ -124,9 +136,12 @@ class Charakter extends MoveableObject {
   animateIdle() {
     setInterval(() => {
       let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;
-      if (timeSinceLastKeyPress > 10000) {
+      if (timeSinceLastKeyPress > 20000) {
+        this.snoring_sound.volume = 0.3;
+        this.snoring_sound.play();
         this.playAnimation(this.IMAGES_LONG_IDLE);
-      } else if (timeSinceLastKeyPress > 30) {
+      } else if (timeSinceLastKeyPress > 40) {
+        this.snoring_sound.pause();
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 200);

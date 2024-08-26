@@ -2,6 +2,7 @@ class Coins extends DrawableObject {
   width = 150;
   height = 150;
   coinsImg = ['img/8_coin/coin_1.png', 'img/8_coin/coin_2.png'];
+  coin_sound = new Audio('audio/coin.mp3');
 
   constructor() {
     super();

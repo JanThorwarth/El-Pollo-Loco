@@ -26,7 +26,7 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/game.js" defer></script>
     <style>
         @font-face {
             font-family: "zabras";
@@ -47,9 +47,7 @@
         </div>
         <button onclick="startGame()" class="start-button">Start</button>
         <img onclick="impressum()" id="impressum" class="impressum" src="/img/icons/impressum.png" alt="">
-        <div id="soundDivOverlay" class="soundDivOverlay">
-            <img id="volume" onclick="volumeOnOff()" src="/img/icons/volume-on.png" alt="">
-        </div>
+
     </div>
     <div id="endscreen" style="display: none;" class="endScreen">
         <img class="end-background" src="img/5_background/first_half_background.png" alt="">
@@ -78,19 +76,27 @@
         <p>E-Mail: thorwarth.jan@web.de</p>
     </div>
 
-    <div class="gameDiv">
-        <canvas style="display: none;" id="canvas" width="720" height="480"> </canvas>
-        <div id="soundDivIngame" class="soundDivIngame">
+    <div id="turnScreen" class="turn-screen-div">
+        <div class="turn-screen-layer">
+            <h1>TURN SCREEN</h1>
+
+        </div>
+
+    </div>
+
+    <div id="gameDiv" class="gameDiv d-none">
+        <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
+        <div id="soundDivIngame" class="soundDivIngame d-none">
             <img id="volumeIngame" onclick="volumeOnOffIngame()" src="/img/icons/volume-on.png" alt="">
         </div>
-        <div class="mobile-controls">
+        <div class="mobile-controls ">
             <div class="left-right">
-                <img class="left" src="/img/icons/left.png" alt="">
-                <img class="right" src="/img/icons/right.png" alt="">
+                <img id="leftBtn" class="left" src="/img/icons/left.png" alt="">
+                <img id="rightBtn" class="right" src="/img/icons/right.png" alt="">
             </div>
             <div class="up-throw">
-                <img class="up" src="/img/icons/up.png" alt="">
-                <img class="throw" src="/img/icons/throw.png" alt="">
+                <img id="upBtn" class="up" src="/img/icons/up.png" alt="">
+                <img id="throwBtn" class="throw" src="/img/icons/throw.png" alt="">
 
             </div>
 
