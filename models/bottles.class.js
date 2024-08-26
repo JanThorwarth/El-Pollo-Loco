@@ -18,7 +18,6 @@ class Bottles extends DrawableObject {
     super();
     this.loadImage(this.bottles[0]);
     this.loadImages(this.bottles);
-
     this.x = 200 + Math.random() * 500;
     this.y = 30;
     this.animate();

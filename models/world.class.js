@@ -16,8 +16,6 @@ class World {
   bottleCount = 0;
   otherDirection = false;
   endboss = new Endboss();
-  coin_sound = new Audio('audio/coin.mp3');
-  bottle_sound = new Audio('audio/bottle.mp3');
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -155,8 +153,8 @@ class World {
     this.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
         this.coins.splice(index, 1);
-        this.coin_sound.volume = 0.4;
-        this.coin_sound.play();
+        coin_sound.volume = 0.4;
+        coin_sound.play();
         this.addCoin();
       }
     });
@@ -166,8 +164,8 @@ class World {
     this.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
         this.bottles.splice(index, 1);
-        this.bottle_sound.volume = 0.4;
-        this.bottle_sound.play();
+        bottle_sound.volume = 0.4;
+        bottle_sound.play();
         this.addBottle();
       }
     });
@@ -193,20 +191,24 @@ class World {
     this.bottleCollisionWithEndboss();
     this.EndbossCollision();
   }
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.camera_x, 0);
+
+  drawObjects() {
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.coins);
-    this.addToMap(this.character);
     this.addObjectsToMap(this.level.chicken);
     this.addObjectsToMap(this.level.smallChicken);
-    this.addToMap(this.endboss);
     this.addObjectsToMap(this.bottles);
-    this.addStatusBar();
+  }
 
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.translate(this.camera_x, 0);
+    this.drawObjects();
+    this.addToMap(this.character);
+    this.addToMap(this.endboss);
+    this.addStatusBar();
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
@@ -233,14 +235,12 @@ class World {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
-
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   }
+
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);

@@ -70,6 +70,7 @@ class Charakter extends MoveableObject {
     left: 20,
     right: 20,
   };
+
   world;
   constructor() {
     super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -80,68 +81,111 @@ class Charakter extends MoveableObject {
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.applyGravity();
-    this.animate();
+    this.animateMoving();
     this.animateIdle();
+  }
+  isDeadAlreadyHandled = false;
+
+  characterMovingRight() {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      this.moveRight();
+      this.lastKeyPressTime = Date.now();
+      this.otherDirection = false;
+      walking_sound.play();
+    }
+  }
+
+  characterMovingLeft() {
+    if (this.world.keyboard.LEFT && this.x > 0) {
+      this.moveLeft();
+      this.lastKeyPressTime = Date.now();
+      this.otherDirection = true;
+      walking_sound.play();
+    }
+  }
+
+  characterJumping() {
+    if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+      this.jump();
+      jump_sound.volume = 0.1;
+      jump_sound.play();
+    }
+  }
+
+  showEndscreenDeath() {
+    document.getElementById('soundDivIngame').classList.add('d-none');
+    document.getElementById('gameDiv').classList.add('d-none');
+    document.getElementById('canvas').style.display = 'none';
+    document.getElementById('endscreen').style.display = 'block';
+  }
+
+  characterDeadSounds() {
+    pepe_death_sound.volume = 0.5;
+    pepe_death_sound.play();
+    lost_sound.volume = 0.5;
+    lost_sound.play();
+    music_sound.pause();
+  }
+
+  characterHurtSounds() {
+    hurt_sound.volume = 0.2;
+    hurt_sound.play();
+  }
+
+  characterIsMoving() {
+    return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+  }
+
+  characterDead() {
+    this.isDeadAlreadyHandled = true;
+    this.playAnimation(this.IMAGES_DEAD);
+    this.showEndscreenDeath();
+    this.characterDeadSounds();
   }
 
   animate() {
     setInterval(() => {
-      this.walking_sound.pause();
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-        this.lastKeyPressTime = Date.now();
-        this.otherDirection = false;
-        this.walking_sound.play();
-      }
-      if (this.world.keyboard.LEFT && this.x > 0) {
-        this.moveLeft();
-        this.lastKeyPressTime = Date.now();
-        this.otherDirection = true;
-        this.walking_sound.play();
-      }
-
-      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.jump();
-        this.jump_sound.volume = 0.1;
-        this.jump_sound.play();
-      }
-
-      this.world.camera_x = -this.x + 100;
-    }, 1000 / 30);
-
-    setInterval(() => {
       if (this.isDead()) {
-        document.getElementById('soundDivIngame').classList.add('d-none');
-        document.getElementById('gameDiv').classList.add('d-none');
-        this.playAnimation(this.IMAGES_DEAD);
-        this.pepe_death_sound.play();
-        document.getElementById('canvas').style.display = 'none';
-        document.getElementById('endscreen').style.display = 'block';
-        this.lost_sound.play();
-        this.pepe_death_sound.pause();
-        this.lost_sound.pause();
+        if (!this.isDeadAlreadyHandled) {
+          this.characterDead();
+        }
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-        this.hurt_sound.play();
+        this.characterHurtSounds();
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        if (this.characterIsMoving()) {
           this.playAnimation(this.IMAGES_WALKING);
         }
       }
     }, 100);
   }
 
+  animateMoving() {
+    setInterval(() => {
+      walking_sound.pause();
+      this.characterMovingRight();
+      this.characterMovingLeft();
+      this.characterJumping();
+      this.world.camera_x = -this.x + 100;
+    }, 1000 / 30);
+    this.animate();
+  }
+
+  characterSnoringSounds() {
+    snoring_sound.volume = 0.1;
+    snoring_sound.play();
+  }
+
   animateIdle() {
     setInterval(() => {
       let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;
       if (timeSinceLastKeyPress > 20000) {
-        this.snoring_sound.volume = 0.3;
-        this.snoring_sound.play();
+        this.characterSnoringSounds();
         this.playAnimation(this.IMAGES_LONG_IDLE);
       } else if (timeSinceLastKeyPress > 40) {
-        this.snoring_sound.pause();
+        snoring_sound.pause();
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 200);

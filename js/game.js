@@ -1,29 +1,79 @@
 let canvas;
 let world = null;
 let keyboard = new Keyboard();
+let isMuted = false;
 let music_sound = new Audio('audio/music.mp3');
+let walking_sound = new Audio('audio/walking.mp3');
+let hurt_sound = new Audio('audio/hurt.mp3');
+let jump_sound = new Audio('audio/jump.mp3');
+let snoring_sound = new Audio('audio/snoring.mp3');
+let chicken_sound = new Audio('audio/chicken.mp3');
+let pepe_death_sound = new Audio('audio/pepe-death.mp3');
+let chicken_death_sound = new Audio('audio/chicken-death.mp3');
+let lost_sound = new Audio('audio/lost.mp3');
+let coin_sound = new Audio('audio/coin.mp3');
+let bottle_sound = new Audio('audio/bottle.mp3');
+let splash_sound = new Audio('audio/splash.mp3');
+let endboss_hurt_sound = new Audio('audio/endboss_hurt.mp3');
+let endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
+let endboss_sound = new Audio('audio/endboss.mp3');
+let win_sound = new Audio('audio/win.mp3');
+
+function volumeOnOffIngame() {
+  isMuted = !isMuted;
+
+  music_sound.muted = isMuted;
+  walking_sound.muted = isMuted;
+  hurt_sound.muted = isMuted;
+  jump_sound.muted = isMuted;
+  snoring_sound.muted = isMuted;
+  chicken_sound.muted = isMuted;
+  pepe_death_sound.muted = isMuted;
+  chicken_death_sound.muted = isMuted;
+  lost_sound.muted = isMuted;
+  coin_sound.muted = isMuted;
+  bottle_sound.muted = isMuted;
+  splash_sound.muted = isMuted;
+  endboss_hurt_sound.muted = isMuted;
+  endboss_dead_sound.muted = isMuted;
+  win_sound.muted = isMuted;
+  endboss_sound.muted = isMuted;
+  changeVolumeLogo();
+}
+
+function changeVolumeLogo() {
+  let volume = document.getElementById('volumeIngame');
+  if (isMuted) {
+    volume.src = 'img/icons/volume-off.png';
+  } else {
+    volume.src = 'img/icons/volume-on.png';
+  }
+}
+
+function playMusic() {
+  music_sound.volume = 0.05;
+  music_sound.loop = true;
+  music_sound.play();
+}
+
+function hideStartscreenFromStartGame() {
+  canvas = document.getElementById('canvas');
+  canvas.classList.remove('d-none');
+  canvas.style.display = 'block';
+  document.getElementById('gameDiv').classList.remove('d-none');
+  document.getElementById('start').style.display = 'none';
+  document.getElementById('soundDivIngame').classList.remove('d-none');
+}
 
 function startGame() {
   initLevel();
-  music_sound.volume = 0.05;
-  music_sound.play();
-  canvas = document.getElementById('canvas');
-  gameDiv = document.getElementById('gameDiv');
-  startscreen = document.getElementById('start');
-
-  soundDivIngame = document.getElementById('soundDivIngame');
+  playMusic();
+  hideStartscreenFromStartGame();
   world = new World(canvas, keyboard);
-  gameDiv.classList.remove('d-none');
-  soundDivIngame.classList.remove('d-none');
-
-  startscreen.style.display = 'none';
-  canvas.classList.remove('d-none');
-  canvas.style.display = 'block';
 }
 
 function checkScreenWidth() {
-  const turnScreenDiv = document.getElementById('turnScreen');
-
+  let turnScreenDiv = document.getElementById('turnScreen');
   if (window.innerWidth <= 600) {
     turnScreenDiv.style.display = 'flex';
   } else {
@@ -34,38 +84,34 @@ function checkScreenWidth() {
 window.addEventListener('resize', checkScreenWidth);
 window.addEventListener('load', checkScreenWidth);
 
+function hideCanvasFromHomescreen() {
+  document.getElementById('gameDiv').classList.add('d-none');
+  document.getElementById('soundDivIngame').classList.add('d-none');
+  document.getElementById('endscreen').style.display = 'none';
+  document.getElementById('endscreenWin').style.display = 'none';
+  document.getElementById('start').style.display = 'block';
+}
+
 function homescreen() {
   clearAllIntervals();
-  gameDiv = document.getElementById('gameDiv');
-  soundDivIngame = document.getElementById('soundDivIngame');
-  endscreen = document.getElementById('endscreen');
-  endscreenWin = document.getElementById('endscreenWin');
-  startscreen = document.getElementById('start');
-
-  gameDiv.classList.add('d-none');
-  soundDivIngame.classList.add('d-none');
-  startscreen.style.display = 'block';
-  endscreen.style.display = 'none';
-  endscreenWin.style.display = 'none';
-
+  hideCanvasFromHomescreen();
   world = new World(canvas, keyboard);
+}
+
+function hideCanvasFromRestart() {
+  document.getElementById('gameDiv').classList.remove('d-none');
+  document.getElementById('soundDivIngame').classList.remove('d-none');
+  document.getElementById('endscreen').style.display = 'none';
+  document.getElementById('endscreenWin').style.display = 'none';
+  document.getElementById('start').style.display = 'none';
+  document.getElementById('canvas').style.display = 'block';
 }
 
 function restart() {
   clearAllIntervals();
-  gameDiv = document.getElementById('gameDiv');
-  canvas = document.getElementById('canvas');
-  endscreen = document.getElementById('endscreenWin');
-  startscreen = document.getElementById('start');
-  endscreen = document.getElementById('endscreen');
-  soundDivIngame = document.getElementById('soundDivIngame');
-
-  gameDiv.classList.remove('d-none');
-  soundDivIngame.classList.remove('d-none');
-  endscreen.style.display = 'none';
-  startscreen.style.display = 'none';
-  endscreenWin.style.display = 'none';
-  canvas.style.display = 'block';
+  endboss_sound.pause();
+  music_sound.play();
+  hideCanvasFromRestart();
   initLevel();
   world = new World(canvas, keyboard);
 }
@@ -74,23 +120,6 @@ function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-function volumeOnOff() {
-  let volume = document.getElementById('volume');
-  if (volume.src.endsWith('img/icons/volume-on.png')) {
-    volume.src = 'img/icons/volume-off.png';
-  } else {
-    volume.src = 'img/icons/volume-on.png';
-  }
-}
-
-function volumeOnOffIngame() {
-  let volume = document.getElementById('volumeIngame');
-  if (volume.src.endsWith('img/icons/volume-on.png')) {
-    volume.src = 'img/icons/volume-off.png';
-  } else {
-    volume.src = 'img/icons/volume-on.png';
-  }
-}
 function closeImpressum() {
   let impressumDiv = document.getElementById('impressumDiv');
   impressumDiv.classList.add('d-none');
