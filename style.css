@@ -10,7 +10,6 @@ body {
 }
 .gameDiv {
   position: relative;
-
   height: 480px;
 }
 
@@ -146,7 +145,6 @@ h1 {
   padding: 8px;
   cursor: pointer;
 }
-
 .d-none {
   display: none;
 }

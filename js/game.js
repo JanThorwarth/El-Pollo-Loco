@@ -19,6 +19,9 @@ let endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
 let endboss_sound = new Audio('audio/endboss.mp3');
 let win_sound = new Audio('audio/win.mp3');
 
+/**
+ * Toggles the in-game sound on or off.
+ */
 function volumeOnOffIngame() {
   isMuted = !isMuted;
 
@@ -41,6 +44,9 @@ function volumeOnOffIngame() {
   changeVolumeLogo();
 }
 
+/**
+ * Updates the volume icon in the UI.
+ */
 function changeVolumeLogo() {
   let volume = document.getElementById('volumeIngame');
   if (isMuted) {
@@ -50,12 +56,18 @@ function changeVolumeLogo() {
   }
 }
 
+/**
+ * Plays the background music with a specific volume and loops it.
+ */
 function playMusic() {
   music_sound.volume = 0.05;
   music_sound.loop = true;
   music_sound.play();
 }
 
+/**
+ * Displays the game canvas and hides the start screen.
+ */
 function hideStartscreenFromStartGame() {
   canvas = document.getElementById('canvas');
   canvas.classList.remove('d-none');
@@ -65,6 +77,9 @@ function hideStartscreenFromStartGame() {
   document.getElementById('soundDivIngame').classList.remove('d-none');
 }
 
+/**
+ * Initializes the game, plays music, and starts the world.
+ */
 function startGame() {
   initLevel();
   playMusic();
@@ -72,6 +87,9 @@ function startGame() {
   world = new World(canvas, keyboard);
 }
 
+/**
+ * Checks the screen width and displays or hides the turn screen prompt accordingly.
+ */
 function checkScreenWidth() {
   let turnScreenDiv = document.getElementById('turnScreen');
   if (window.innerWidth <= 600) {
@@ -84,6 +102,9 @@ function checkScreenWidth() {
 window.addEventListener('resize', checkScreenWidth);
 window.addEventListener('load', checkScreenWidth);
 
+/**
+ * Hides the game canvas and shows the home screen.
+ */
 function hideCanvasFromHomescreen() {
   document.getElementById('gameDiv').classList.add('d-none');
   document.getElementById('soundDivIngame').classList.add('d-none');
@@ -92,12 +113,18 @@ function hideCanvasFromHomescreen() {
   document.getElementById('start').style.display = 'block';
 }
 
+/**
+ * Returns to the home screen and resets the game.
+ */
 function homescreen() {
   clearAllIntervals();
   hideCanvasFromHomescreen();
   world = new World(canvas, keyboard);
 }
 
+/**
+ * Prepares the canvas for restarting the game.
+ */
 function hideCanvasFromRestart() {
   document.getElementById('gameDiv').classList.remove('d-none');
   document.getElementById('soundDivIngame').classList.remove('d-none');
@@ -107,6 +134,9 @@ function hideCanvasFromRestart() {
   document.getElementById('canvas').style.display = 'block';
 }
 
+/**
+ * Restarts the game, resets the world, and resumes the music.
+ */
 function restart() {
   clearAllIntervals();
   endboss_sound.pause();
@@ -116,15 +146,24 @@ function restart() {
   world = new World(canvas, keyboard);
 }
 
+/**
+ * Clears all active intervals.
+ */
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/**
+ * Closes the impressum (legal notice) dialog.
+ */
 function closeImpressum() {
   let impressumDiv = document.getElementById('impressumDiv');
   impressumDiv.classList.add('d-none');
 }
 
+/**
+ * Opens the impressum (legal notice) dialog.
+ */
 function impressum() {
   let impressumDiv = document.getElementById('impressumDiv');
   impressumDiv.classList.remove('d-none');

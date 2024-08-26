@@ -21,12 +21,19 @@ class SmallChicken extends MoveableObject {
     this.animate();
   }
 
+  /**
+   * Handles the animation and movement of the object.
+   *
+   * This method sets up two intervals:
+   * 1. Moves the object to the left if it is not dead, updating the position at a frame rate of 30 FPS.
+   * 2. Plays the walking animation if the object is not dead, updating the animation frame at a rate of 5 FPS.
+   */
   animate() {
     setInterval(() => {
       if (!this.isDead) {
         this.moveLeft();
       }
-    }, 1000 / 60);
+    }, 1000 / 30);
 
     setInterval(() => {
       if (!this.isDead) {
@@ -35,6 +42,12 @@ class SmallChicken extends MoveableObject {
     }, 200);
   }
 
+  /**
+   * Marks the object as dead and loads the image representing the dead state.
+   *
+   * This method sets the `isDead` property to `true` and loads the first image from the `IMAGES_DEAD` array
+   * to represent the object's dead state.
+   */
   die() {
     this.isDead = true;
     this.loadImage(this.IMAGES_DEAD[0]);

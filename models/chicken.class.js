@@ -27,20 +27,36 @@ class Chicken extends MoveableObject {
     this.animate();
   }
 
+  /**
+   * Plays the chicken's death sound at a lower volume.
+   */
   chickenDeathSound() {
     chicken_death_sound.volume = 0.2;
     chicken_death_sound.play();
   }
 
+  /**
+   * Handles the chicken's death sequence.
+   * Sets the chicken's status to dead, loads the dead image, and plays the death sound.
+   */
   die() {
     this.isDead = true;
     this.loadImage(this.IMAGES_DEAD[0]);
     this.chickenDeathSound();
   }
+
+  /**
+   * Checks if the chicken is dead.
+   * @returns {boolean} True if the chicken is dead, otherwise false.
+   */
   isDead() {
     return this.isDead;
   }
 
+  /**
+   * Animates the chicken's movement and walking animation.
+   * Moves the chicken to the left if it's not dead, and plays the walking animation.
+   */
   animate() {
     setInterval(() => {
       if (!this.isDead) {

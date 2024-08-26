@@ -13,6 +13,10 @@ class MoveableObject extends DrawableObject {
     bottom: 0,
   };
 
+  /**
+   * Applies gravity to the object, causing it to fall if it is not above ground or if it is moving downward.
+   * The gravity effect is simulated by continuously adjusting the object's vertical position (`y`) and vertical speed (`speedY`).
+   */
   applyGravity() {
     const gravity = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -22,6 +26,13 @@ class MoveableObject extends DrawableObject {
     }, 1000 / 30);
   }
 
+  /**
+   * Checks if the object is above the ground level.
+   * If the object is an instance of `ThrowableObject`, it is considered to be above ground.
+   * Otherwise, the object's `y` position is compared to a threshold (155) to determine if it is above ground.
+   *
+   * @returns {boolean} True if the object is above ground, false otherwise.
+   */
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       return true;
@@ -30,10 +41,23 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Checks if the object is falling.
+   * An object is considered to be falling if its vertical speed (`speedY`) is negative and its `y` position is below a threshold (158).
+   *
+   * @returns {boolean} True if the object is falling, false otherwise.
+   */
   isFalling() {
     return this.speedY < 0 && this.y < 158;
   }
 
+  /**
+   * Checks if the object is colliding with another object.
+   * Collision detection is based on the bounding boxes of the two objects.
+   *
+   * @param {Object} mo - The other object to check for collision with.
+   * @returns {boolean} True if the objects are colliding, false otherwise.
+   */
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -43,6 +67,10 @@ class MoveableObject extends DrawableObject {
     );
   }
 
+  /**
+   * Reduces the object's energy by 5 if it is not falling.
+   * Updates the time of the last hit if the object is still alive.
+   */
   hit() {
     if (!this.isFalling()) {
       this.energy -= 5;
@@ -54,6 +82,12 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Checks if the object is hurt.
+   * An object is considered hurt if it is not falling and the time since the last hit is less than 1 second.
+   *
+   * @returns {boolean} True if the object is hurt, false otherwise.
+   */
   isHurt() {
     if (!this.isFalling()) {
       let timePassed = new Date().getTime() - this.lastHit;
@@ -63,10 +97,21 @@ class MoveableObject extends DrawableObject {
     return false;
   }
 
+  /**
+   * Checks if the object is dead.
+   * The object is considered dead if its energy is zero.
+   *
+   * @returns {boolean} True if the object is dead, false otherwise.
+   */
   isDead() {
     return this.energy == 0;
   }
 
+  /**
+   * Updates the object's current image based on an array of image paths and increments the image index.
+   *
+   * @param {string[]} images - An array of image paths to cycle through.
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];
@@ -74,12 +119,23 @@ class MoveableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  /**
+   * Moves the object to the left by subtracting the object's speed from its x position.
+   */
   moveLeft() {
     this.x -= this.speed;
   }
+
+  /**
+   * Makes the object jump by setting its vertical speed (`speedY`) to a positive value.
+   */
   jump() {
     this.speedY = 30;
   }
+
+  /**
+   * Moves the object to the right by adding the object's speed to its x position.
+   */
   moveRight() {
     this.x += this.speed;
   }

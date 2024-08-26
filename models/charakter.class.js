@@ -86,6 +86,10 @@ class Charakter extends MoveableObject {
   }
   isDeadAlreadyHandled = false;
 
+  /**
+   * Handles the character's movement to the right.
+   * Plays the walking sound when moving.
+   */
   characterMovingRight() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -95,6 +99,10 @@ class Charakter extends MoveableObject {
     }
   }
 
+  /**
+   * Handles the character's movement to the left.
+   * Plays the walking sound when moving.
+   */
   characterMovingLeft() {
     if (this.world.keyboard.LEFT && this.x > 0) {
       this.moveLeft();
@@ -104,6 +112,10 @@ class Charakter extends MoveableObject {
     }
   }
 
+  /**
+   * Handles the character's jumping action.
+   * Plays the jump sound when the character jumps.
+   */
   characterJumping() {
     if (this.world.keyboard.SPACE && !this.isAboveGround()) {
       this.jump();
@@ -112,6 +124,10 @@ class Charakter extends MoveableObject {
     }
   }
 
+  /**
+   * Displays the death end screen.
+   * Hides the game and sound elements.
+   */
   showEndscreenDeath() {
     document.getElementById('soundDivIngame').classList.add('d-none');
     document.getElementById('gameDiv').classList.add('d-none');
@@ -119,6 +135,11 @@ class Charakter extends MoveableObject {
     document.getElementById('endscreen').style.display = 'block';
   }
 
+  /**
+   * Plays sounds when the character dies.
+   * Includes pepe's death sound and the lost sound.
+   * Pauses the background music.
+   */
   characterDeadSounds() {
     pepe_death_sound.volume = 0.5;
     pepe_death_sound.play();
@@ -127,15 +148,26 @@ class Charakter extends MoveableObject {
     music_sound.pause();
   }
 
+  /**
+   * Plays the hurt sound when the character is injured.
+   */
   characterHurtSounds() {
     hurt_sound.volume = 0.2;
     hurt_sound.play();
   }
 
+  /**
+   * Checks if the character is currently moving (either left or right).
+   * @returns {boolean} True if the character is moving, otherwise false.
+   */
   characterIsMoving() {
     return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
   }
 
+  /**
+   * Handles the character's death sequence.
+   * Plays death animations and sounds, and shows the end screen.
+   */
   characterDead() {
     this.isDeadAlreadyHandled = true;
     this.playAnimation(this.IMAGES_DEAD);
@@ -143,6 +175,9 @@ class Charakter extends MoveableObject {
     this.characterDeadSounds();
   }
 
+  /**
+   * Animates the character based on its state (dead, hurt, jumping, or walking).
+   */
   animate() {
     setInterval(() => {
       if (this.isDead()) {
@@ -162,6 +197,10 @@ class Charakter extends MoveableObject {
     }, 100);
   }
 
+  /**
+   * Animates the character's movement (right, left, or jumping).
+   * Adjusts the camera position based on the character's location.
+   */
   animateMoving() {
     setInterval(() => {
       walking_sound.pause();
@@ -173,11 +212,18 @@ class Charakter extends MoveableObject {
     this.animate();
   }
 
+  /**
+   * Plays the snoring sound when the character is idle for a long time.
+   */
   characterSnoringSounds() {
     snoring_sound.volume = 0.1;
     snoring_sound.play();
   }
 
+  /**
+   * Animates the character when idle.
+   * Switches between long idle and idle animations based on the time since the last key press.
+   */
   animateIdle() {
     setInterval(() => {
       let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;

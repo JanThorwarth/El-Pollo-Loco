@@ -23,12 +23,20 @@ class Bottles extends DrawableObject {
     this.animate();
   }
 
+  /**
+   * Animates the object's bottle collection by cycling through images.
+   */
   animate() {
     setInterval(() => {
       this.playAnimation(this.bottles);
     }, 500);
   }
 
+  /**
+   * Plays an animation by cycling through an array of images.
+   *
+   * @param {string[]} images - An array of image paths for the animation.
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length;
     this.img = this.ImageCache[images[i]];

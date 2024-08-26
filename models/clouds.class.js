@@ -9,6 +9,9 @@ class Cloud extends MoveableObject {
     this.animate();
   }
 
+  /**
+   * Animates the chicken by moving it to the left.
+   */
   animate() {
     this.moveLeft();
   }
