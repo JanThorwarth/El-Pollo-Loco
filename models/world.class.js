@@ -28,6 +28,7 @@ class World {
     this.runCollisions();
     this.runThrowObjects();
     this.update();
+    this.runCollisionsCharacter();
   }
 
   /**
@@ -103,7 +104,17 @@ class World {
   runCollisions() {
     setInterval(() => {
       this.checkCollisions();
-    }, 50);
+    }, 10);
+  }
+
+  runCollisionsCharacter() {
+    setInterval(() => {
+      this.chickenCollision();
+      this.smallChickenCollision();
+      this.coinCollision();
+      this.bottleCollision();
+      this.EndbossCollision();
+    }, 100);
   }
 
   /**
@@ -143,9 +154,10 @@ class World {
         if (!enemy.isDead) {
           enemy.die();
           this.character.jump();
+          this.character.playJumpAnimationOnce();
         }
         setTimeout(() => {
-          this.level.smallChicken.splice(index, 1);
+          this.level.smallChicken = this.level.smallChicken.filter((chick) => chick !== enemy);
         }, 1000);
       }
     });
@@ -174,9 +186,10 @@ class World {
         if (!enemy.isDead) {
           enemy.die();
           this.character.jump();
+          this.character.playJumpAnimationOnce();
         }
         setTimeout(() => {
-          this.level.chicken.splice(index, 1);
+          this.level.chicken = this.level.chicken.filter((chick) => chick !== enemy);
         }, 1000);
       }
     });
@@ -190,6 +203,8 @@ class World {
     this.level.chicken.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isFalling() && !enemy.isDead) {
         this.character.hit();
+        console.log(this.character.energy);
+
         this.statusBarHealth.setPercentage(this.character.energy);
       }
     });
@@ -242,10 +257,12 @@ class World {
    * This method iterates over thrown bottles and checks if they collide with the endboss. If so, it triggers the splash animation and updates the endboss's health.
    */
   bottleCollisionWithEndboss() {
-    this.throwableObjects.forEach((thrownBottle, index) => {
+    this.throwableObjects.forEach((thrownBottle) => {
       if (this.endboss.isColliding(thrownBottle)) {
         thrownBottle.splashAnimation();
         this.endboss.hit();
+        console.log(this.endboss.energy);
+
         this.statusBarEndboss.setPercentage(this.endboss.energy);
       }
     });
@@ -256,14 +273,9 @@ class World {
    * This method invokes collision checks for chickens, coins, bottles, and the endboss, ensuring all game interactions are handled.
    */
   checkCollisions() {
-    this.chickenCollision();
-    this.smallChickenCollision();
     this.smallChickenCollisionAbove();
-    this.coinCollision();
-    this.bottleCollision();
     this.chickenCollisionAbove();
     this.bottleCollisionWithEndboss();
-    this.EndbossCollision();
   }
 
   /**

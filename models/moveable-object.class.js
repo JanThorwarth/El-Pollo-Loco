@@ -73,7 +73,18 @@ class MoveableObject extends DrawableObject {
    */
   hit() {
     if (!this.isFalling()) {
-      this.energy -= 5;
+      this.energy -= 2;
+    }
+    if (this.energy <= 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
+  endbossHit() {
+    if (!this.isFalling()) {
+      this.energy -= 1;
     }
     if (this.energy <= 0) {
       this.energy = 0;
@@ -138,5 +149,26 @@ class MoveableObject extends DrawableObject {
    */
   moveRight() {
     this.x += this.speed;
+  }
+
+  /**
+   * Plays the end animation once for the given array of images.
+   *
+   * This method loads the images from the given array and plays each image in sequence to show the end animation.
+   * After finishing the animation, it moves the bottle off-screen.
+   *
+   * @param {Array<string>} array - Array of image paths to be used for the end animation.
+   */
+  playEndAnimationOnce(array) {
+    this.loadImages(array);
+    let i = 0;
+    let splashInterval = setInterval(() => {
+      this.playAnimation([array[i]]);
+      i++;
+      if (i >= array.length) {
+        clearInterval(splashInterval);
+        this.y = +1000;
+      }
+    }, 1000 / 25);
   }
 }

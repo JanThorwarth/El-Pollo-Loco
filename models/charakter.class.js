@@ -1,7 +1,7 @@
 class Charakter extends MoveableObject {
   speed = 10;
   y = 50;
-  energy = 100;
+  energy = 70;
 
   IMAGES_WALKING = [
     'img/2_character_pepe/2_walk/W-21.png',
@@ -68,7 +68,7 @@ class Charakter extends MoveableObject {
     top: 100,
     bottom: 10,
     left: 20,
-    right: 20,
+    right: 30,
   };
 
   world;
@@ -179,6 +179,8 @@ class Charakter extends MoveableObject {
    * Animates the character based on its state (dead, hurt, jumping, or walking).
    */
   animate() {
+    let isJumping = false; // Variable, um sicherzustellen, dass die Sprunganimation nur einmal abgespielt wird
+
     setInterval(() => {
       if (this.isDead()) {
         if (!this.isDeadAlreadyHandled) {
@@ -188,8 +190,13 @@ class Charakter extends MoveableObject {
         this.playAnimation(this.IMAGES_HURT);
         this.characterHurtSounds();
       } else if (this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_JUMPING);
+        if (!isJumping) {
+          // Nur einmalige Ausführung, wenn der Charakter springt
+          this.playJumpAnimationOnce();
+          isJumping = true; // Markiere, dass die Sprunganimation abgespielt wurde
+        }
       } else {
+        isJumping = false; // Zurücksetzen, wenn der Charakter wieder auf dem Boden ist
         if (this.characterIsMoving()) {
           this.playAnimation(this.IMAGES_WALKING);
         }
@@ -227,7 +234,7 @@ class Charakter extends MoveableObject {
   animateIdle() {
     setInterval(() => {
       let timeSinceLastKeyPress = Date.now() - this.lastKeyPressTime;
-      if (timeSinceLastKeyPress > 20000) {
+      if (timeSinceLastKeyPress > 10000) {
         this.characterSnoringSounds();
         this.playAnimation(this.IMAGES_LONG_IDLE);
       } else if (timeSinceLastKeyPress > 40) {
@@ -235,5 +242,25 @@ class Charakter extends MoveableObject {
         this.playAnimation(this.IMAGES_IDLE);
       }
     }, 200);
+  }
+
+  /**
+   * Plays the jump animation once for the given array of images.
+   *
+   * This method loads the images from the given array and plays each image in sequence to show the jump animation.
+   *
+   * @param {Array<string>} array - Array of image paths to be used for the end animation.
+   */
+
+  playJumpAnimationOnce() {
+    this.loadImages(this.IMAGES_JUMPING);
+    let i = 0;
+    let jumpInterval = setInterval(() => {
+      this.playAnimation([this.IMAGES_JUMPING[i]]);
+      i++;
+      if (i >= this.IMAGES_JUMPING.length) {
+        clearInterval(jumpInterval);
+      }
+    }, 1000 / 10);
   }
 }

@@ -1,10 +1,13 @@
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100vh;
   font-family: 'zabras', Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-image: url('img/desert.png');
   background-position: center;
 }
@@ -309,6 +312,9 @@ h1 {
   }
   .end-gameover {
     width: 100%;
+  }
+  .mobile-controls {
+    display: flex;
   }
 }
 
